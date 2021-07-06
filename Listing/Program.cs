@@ -30,7 +30,7 @@ namespace Listing
             //Console.WriteLine(val);
             Console.WriteLine();
             Console.WriteLine(myList.Count);
-            
+            Console.WriteLine(myList.Capacity);
             Console.ReadKey();
         }
     }

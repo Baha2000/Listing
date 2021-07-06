@@ -12,8 +12,7 @@ namespace Listing
         public int Count { get; private set; }
         public int Capacity { get; private set; }
 
-        double[] Mas;
-        double[] TempMas;
+        private double[] myArray;
         public double this[int index]
         {
             get
@@ -21,20 +20,20 @@ namespace Listing
                 if (index > Count)
                     return 0;
                 else
-                    return Mas[index];
+                    return myArray[index];
             }
         }
         public MyDoubleList(int Capacity)
         {
             this.Capacity = Capacity;
-            Mas = new double[Capacity];
+            myArray = new double[Capacity];
             Count = 0;
         }
 
         public MyDoubleList()
         {
             Capacity = 1;
-            Mas = new double[1];
+            myArray = new double[1];
             Count = 0;
         }
 
@@ -61,9 +60,9 @@ namespace Listing
             {
                 for (int i = index; i < Count - 1; i++)
                 {
-                    Mas[i] = Mas[i + 1];
+                    myArray[i] = myArray[i + 1];
                 }
-                Mas[Count - 1] = 0;
+                myArray[Count - 1] = 0;
                 Count--;
             }
         }
@@ -71,7 +70,7 @@ namespace Listing
         public void Print()
         {
             for (int i = 0; i < Count; i++)
-                Console.WriteLine(Mas[i]);
+                Console.WriteLine(myArray[i]);
         }
 
         private void CheckCount(int length)
@@ -79,12 +78,7 @@ namespace Listing
 
             if (Count + length > Capacity)
             {
-                //TempMas = new double[Capacity];
-                //Mas.CopyTo(TempMas, 0);
-                TempMas = MasCopy(Mas, Capacity);
-                Mas = MasCopy(TempMas, Count + length);
-                //Mas = new double[Count + length];
-                //TempMas.CopyTo(Mas, 0);
+                myArray = MasCopy(myArray, Count + length);
                 Capacity += length;
             }
         }
@@ -94,40 +88,32 @@ namespace Listing
 
             if (Count + 1 > Capacity)
             {
-                //TempMas = new double[Capacity];
-                //Mas.CopyTo(TempMas, 0);
-                TempMas = MasCopy(Mas, Capacity);
-                Mas = MasCopy(TempMas, Count + 1);
-                //Mas = new double[Count + 1];
-                //TempMas.CopyTo(Mas, 0);
+                myArray = MasCopy(myArray, Count + 1);
                 Capacity++;
             }
         }
 
-        private double[] MasCopy(double[] MasCopy, int length)
+        private double[] MasCopy(double[] sourceArray, int length)
         {
-            double[] MasPaste = new double[length];
+            double[] destinationArray = new double[length]; 
+
             if (length > Capacity)
-                Array.Copy(MasCopy, MasPaste, MasCopy.Length);
+                System.Array.Copy(sourceArray, destinationArray, sourceArray.Length); //Если нужна копия для увеличения массива
             else
-                Array.Copy(MasCopy, MasPaste, length);
-            
-            //TempMas = new double[length];
-            //Mas.CopyTo(TempMas, 0);
-            //return TempMas;
-            return MasPaste;
+                System.Array.Copy(sourceArray, destinationArray, length); //Если нужен чистый массив значений
+            return destinationArray;
         }
 
         private void InsertItem(double value)
         {
-            Mas[Count] = value;
+            myArray[Count] = value;
             Count++;
         }
 
         public IEnumerator GetEnumerator()
         {
-            Mas = MasCopy(Mas, Count);
-            return Mas.GetEnumerator();
+            myArray = MasCopy(myArray, Count);
+            return myArray.GetEnumerator();
         }
 
     }
