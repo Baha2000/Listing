@@ -19,7 +19,7 @@ namespace Listing
             myList.Add(23.7);
             myList.Add(16.2);
             myList.AddRange(array);
-            val = myList[3];
+            //val = myList[3];
             myList.Remove(0);
             myList.Print();
             
@@ -27,7 +27,10 @@ namespace Listing
             {
                 Console.Write(value + " ");
             }
-            Console.WriteLine(val);
+            //Console.WriteLine(val);
+            Console.WriteLine();
+            Console.WriteLine(myList.Count);
+            
             Console.ReadKey();
         }
     }

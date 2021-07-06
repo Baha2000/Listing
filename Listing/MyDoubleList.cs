@@ -9,15 +9,19 @@ namespace Listing
 {
     class MyDoubleList
     {
-        int Count;
-        int Capacity;
+        public int Count { get; private set; }
+        public int Capacity { get; private set; }
+
         double[] Mas;
         double[] TempMas;
         public double this[int index]
         {
             get
             {
-                return Mas[index];
+                if (index > Count)
+                    return 0;
+                else
+                    return Mas[index];
             }
         }
         public MyDoubleList(int Capacity)
@@ -75,10 +79,12 @@ namespace Listing
 
             if (Count + length > Capacity)
             {
-                TempMas = new double[Capacity];
-                Mas.CopyTo(TempMas, 0);
-                Mas = new double[Count + length];
-                TempMas.CopyTo(Mas, 0);
+                //TempMas = new double[Capacity];
+                //Mas.CopyTo(TempMas, 0);
+                TempMas = MasCopy(Mas, Capacity);
+                Mas = MasCopy(TempMas, Count + length);
+                //Mas = new double[Count + length];
+                //TempMas.CopyTo(Mas, 0);
                 Capacity += length;
             }
         }
@@ -88,12 +94,28 @@ namespace Listing
 
             if (Count + 1 > Capacity)
             {
-                TempMas = new double[Capacity];
-                Mas.CopyTo(TempMas, 0);
-                Mas = new double[Count + 1];
-                TempMas.CopyTo(Mas, 0);
+                //TempMas = new double[Capacity];
+                //Mas.CopyTo(TempMas, 0);
+                TempMas = MasCopy(Mas, Capacity);
+                Mas = MasCopy(TempMas, Count + 1);
+                //Mas = new double[Count + 1];
+                //TempMas.CopyTo(Mas, 0);
                 Capacity++;
             }
+        }
+
+        private double[] MasCopy(double[] MasCopy, int length)
+        {
+            double[] MasPaste = new double[length];
+            if (length > Capacity)
+                Array.Copy(MasCopy, MasPaste, MasCopy.Length);
+            else
+                Array.Copy(MasCopy, MasPaste, length);
+            
+            //TempMas = new double[length];
+            //Mas.CopyTo(TempMas, 0);
+            //return TempMas;
+            return MasPaste;
         }
 
         private void InsertItem(double value)
@@ -104,7 +126,9 @@ namespace Listing
 
         public IEnumerator GetEnumerator()
         {
+            Mas = MasCopy(Mas, Count);
             return Mas.GetEnumerator();
         }
+
     }
 }
