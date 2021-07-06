@@ -1,0 +1,16 @@
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.exe
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.deps.json
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.runtimeconfig.json
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.runtimeconfig.dev.json
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.dll
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\ref\Listing.dll
+C:\Info\Project\Listing\Listing\bin\Debug\net5.0\Listing.pdb
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.csproj.AssemblyReference.cache
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.GeneratedMSBuildEditorConfig.editorconfig
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.AssemblyInfoInputs.cache
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.AssemblyInfo.cs
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.csproj.CoreCompileInputs.cache
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.dll
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\ref\Listing.dll
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.pdb
+C:\Info\Project\Listing\Listing\obj\Debug\net5.0\Listing.genruntimeconfig.cache
