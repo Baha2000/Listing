@@ -8,29 +8,53 @@ namespace Listing
         static void Main(string[] args)
         {
             var myList = new MyDoubleList();
-            double[] array = new double[] { 222.0, 260.5, 289.6, 291.2 };
-            double val;
+            var myList2 = new MyDoubleList(30);
+            double[] array = new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
+            double val, val2;
 
-            myList.Add(10.0);
-            myList.Add(5.0);
-            myList.Add(3.0);
-            myList.Add(13.5);
-            myList.Add(18.9);
-            myList.Add(23.7);
-            myList.Add(16.2);
-            myList.AddRange(array);
-            //val = myList[3];
-            myList.Remove(0);
+            myList.AddRange(array);      
+
+            val = myList[11];
+
+            myList.Remove(4);
             myList.Print();
-            
+            myList.Remove(8);
+
             foreach (var value in myList)
             {
                 Console.Write(value + " ");
             }
-            //Console.WriteLine(val);
+            Console.WriteLine();
+            Console.WriteLine(val);
             Console.WriteLine();
             Console.WriteLine(myList.Count);
             Console.WriteLine(myList.Capacity);
+            Console.WriteLine("***************************************");
+
+            myList2.AddRange(array);
+
+            val2 = myList2[14];
+
+            myList2.Remove(5);
+            myList2.Print();
+            myList2.Remove(4);
+
+            foreach (var value in myList2)
+            {
+                Console.Write(value + " ");
+            }
+            Console.WriteLine();
+            Console.WriteLine(val2);
+            Console.WriteLine();
+            Console.WriteLine(myList2.Count);
+            Console.WriteLine(myList2.Capacity);
+
+            myList2.AddRange(array);
+            myList2.AddRange(array);
+            myList2.AddRange(array);
+            myList2.Remove(57);
+            myList2.Print();
+
             Console.ReadKey();
         }
     }

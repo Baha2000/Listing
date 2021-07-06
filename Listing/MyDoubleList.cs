@@ -17,20 +17,20 @@ namespace Listing
         {
             get
             {
-                if (index > Count)
-                    return 0;
+                if (index > Count - 1)
+                    throw new Exception("Индекс больше, чем количество элементов в массиве");
                 else
                     return myArray[index];
             }
         }
-        public MyDoubleList(int Capacity)
+        public MyDoubleList(int Capacity) //Конструктор, для ввода пользователем вместимости массива вручную
         {
             this.Capacity = Capacity;
             myArray = new double[Capacity];
             Count = 0;
         }
 
-        public MyDoubleList()
+        public MyDoubleList() //Дефолтный конструктор
         {
             Capacity = 1;
             myArray = new double[1];
@@ -39,24 +39,22 @@ namespace Listing
 
         public void Add(double value)
         {
-            CheckCount();
+            CheckArray();
             InsertItem(value);
         }
 
         public void AddRange(IEnumerable<double> items)
         {
-            CheckCount(items.Count());
-
+            CheckArray(items.Count());
             foreach (double value in items)
             {
                 InsertItem(value);
             }
-
         }
 
         public void Remove(int index)
         {
-            if (index <= Count)
+            if (index <= Count - 1)
             {
                 for (int i = index; i < Count - 1; i++)
                 {
@@ -65,6 +63,8 @@ namespace Listing
                 myArray[Count - 1] = 0;
                 Count--;
             }
+            else
+                throw new Exception("Индекс больше, чем количество элементов в массиве");
         }
 
         public void Print()
@@ -73,32 +73,28 @@ namespace Listing
                 Console.WriteLine(myArray[i]);
         }
 
-        private void CheckCount(int length)
+        private void CheckArray(int length)
         {
-
-            if (Count + length > Capacity)
-            {
-                myArray = MasCopy(myArray, Count + length);
-                Capacity += length;
-            }
+            if (Count + length > Capacity) 
+                myArray = MasCopy(ref myArray, Count + length);
         }
 
-        private void CheckCount()
+        private void CheckArray()
         {
-
             if (Count + 1 > Capacity)
-            {
-                myArray = MasCopy(myArray, Count + 1);
-                Capacity++;
-            }
+                myArray = MasCopy(ref myArray, Count + 1);
         }
 
-        private double[] MasCopy(double[] sourceArray, int length)
+        private double[] MasCopy(ref double[] sourceArray, int length) // Передается ссылка на массив myArray для его дальнейшего пересоздания и вставки в него значений из return
         {
-            double[] destinationArray = new double[length]; 
+            double[] destinationArray = new double[length];
 
             if (length > Capacity)
+            {
                 System.Array.Copy(sourceArray, destinationArray, sourceArray.Length); //Если нужна копия для увеличения массива
+                Capacity = length;
+                sourceArray = new double[length];
+            }
             else
                 System.Array.Copy(sourceArray, destinationArray, length); //Если нужен чистый массив значений
             return destinationArray;
@@ -112,8 +108,7 @@ namespace Listing
 
         public IEnumerator GetEnumerator()
         {
-            myArray = MasCopy(myArray, Count);
-            return myArray.GetEnumerator();
+            return MasCopy(ref myArray, Count).GetEnumerator();
         }
 
     }
