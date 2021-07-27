@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Info\\Project\\Listing\\Listing\\Listing.csproj": {}
+    "C:\\VisualProj\\Listing\\Listing\\Listing.csproj": {}
   },
   "projects": {
-    "C:\\Info\\Project\\Listing\\Listing\\Listing.csproj": {
+    "C:\\VisualProj\\Listing\\Listing\\Listing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Info\\Project\\Listing\\Listing\\Listing.csproj",
+        "projectUniqueName": "C:\\VisualProj\\Listing\\Listing\\Listing.csproj",
         "projectName": "Listing",
-        "projectPath": "C:\\Info\\Project\\Listing\\Listing\\Listing.csproj",
+        "projectPath": "C:\\VisualProj\\Listing\\Listing\\Listing.csproj",
         "packagesPath": "C:\\Users\\aliev\\.nuget\\packages\\",
-        "outputPath": "C:\\Info\\Project\\Listing\\Listing\\obj\\",
+        "outputPath": "C:\\VisualProj\\Listing\\Listing\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
