@@ -62,14 +62,14 @@ namespace Listing
             string val;
             double val2;
             
-            myList.AddRange(array);      
-            
-            val = myList[5266];
+            myList.AddRange(array);
+            myList[58] = "nice";
+            val = myList[-58];
             Console.WriteLine(val);
             Console.ReadKey();
 
             myList.Remove(4);
-            myList.Print();
+            //myList.Print();
             myList.Remove(8);
             
             foreach (var value in myList)

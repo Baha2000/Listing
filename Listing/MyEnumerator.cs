@@ -19,12 +19,7 @@ namespace Listing
         {
         }
 
-        public T Current
-        {
-            get {
-                return myArray[index];
-            }
-        }
+        public T Current => myArray[index];
 
         object IEnumerator.Current
         {
@@ -43,10 +38,7 @@ namespace Listing
             return true;
         }
 
-        public void Reset()
-        {
-            index = 0;
-        }
+        public void Reset() => index = 0;
 
         private bool CheckIndex(int index)
         {

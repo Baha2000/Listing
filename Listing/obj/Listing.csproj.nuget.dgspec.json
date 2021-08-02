@@ -1,27 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\VisualProj\\Listing\\Listing\\Listing.csproj": {}
+    "D:\\Users\\Baha\\Projects\\Listing\\Listing\\Listing.csproj": {}
   },
   "projects": {
-    "C:\\VisualProj\\Listing\\Listing\\Listing.csproj": {
+    "D:\\Users\\Baha\\Projects\\Listing\\Listing\\Listing.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\VisualProj\\Listing\\Listing\\Listing.csproj",
+        "projectUniqueName": "D:\\Users\\Baha\\Projects\\Listing\\Listing\\Listing.csproj",
         "projectName": "Listing",
-        "projectPath": "C:\\VisualProj\\Listing\\Listing\\Listing.csproj",
-        "packagesPath": "C:\\Users\\aliev\\.nuget\\packages\\",
-        "outputPath": "C:\\VisualProj\\Listing\\Listing\\obj\\",
+        "projectPath": "D:\\Users\\Baha\\Projects\\Listing\\Listing\\Listing.csproj",
+        "packagesPath": "C:\\Users\\Finch\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\Baha\\Projects\\Listing\\Listing\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\aliev\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Finch\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net5.0"

@@ -15,11 +15,23 @@ namespace Listing
         {
             get
             {
-                if (index >= 0)
-                    index = CheckIndex(index);
-                else
-                    throw new Exception("Недопустимый индекс");
+                index = Math.Abs(index);
+                index = CheckIndex(index);
+                //if (index >= 0)
+                //    index = CheckIndex(index);
+                //else
+                //    index = CheckIndex(-index);
                 return myArray[index];
+            }
+            set
+            {
+                index = Math.Abs(index);
+                if (index + 1 > Capacity)
+                {
+                    MasCopy(ref myArray, CheckCapacity(index + 1));
+                }
+                myArray[index] = value;
+                Count = ++index;
             }
         }
 
@@ -32,13 +44,15 @@ namespace Listing
 
         public void Add(T value)
         {
-            CheckArray(1);
+            MasCopy(ref myArray, CheckCapacity());
+            //CheckArray(1);
             InsertItem(value);
         }
 
         public void AddRange(IEnumerable<T> items)
         {
-            CheckArray(items.Count());
+            MasCopy(ref myArray, CheckCapacity(items.Count()));
+            //CheckArray(items.Count());
             foreach (T value in items)
             {
                 InsertItem(value);
@@ -66,28 +80,42 @@ namespace Listing
             {
                 Console.WriteLine(myArray[i]);
                 if (i + 1 == Count)
+                {
                     i = 0;
+                }
             }
         }
 
-        private void CheckArray(int length)
-        {
-            myArray = MasCopy(ref myArray, CheckCapacity(length));
-        }
+        //private void CheckArray(int length)
+        //{
+        //    myArray = MasCopy(ref myArray, CheckCapacity(length));
+        //}
 
-        private T[] MasCopy(ref T[] sourceArray, int length) // Передается ссылка на массив myArray для его дальнейшего пересоздания и вставки в него значений из return
-        {
-            T[] destinationArray = new T[length];
+        //private T[] MasCopy(T[] sourceArray, int length)
+        //{
+        //    T[] destinationArray = new T[length];
+        //
+        //    if (length > Capacity)
+        //    {
+        //        Array.Copy(myArray, destinationArray, sourceArray.Length); //Если нужна копия для увеличения массива
+        //        Capacity = length;
+        //        sourceArray = new T[length];
+        //    }
+        //    else
+        //        Array.Copy(sourceArray, destinationArray, length); //Если нужен чистый массив значений
+        //
+        //    return destinationArray;
+        //}
 
+        private void MasCopy(ref T[] sourceArray, int length)
+        {
             if (length > Capacity)
             {
-                System.Array.Copy(sourceArray, destinationArray, sourceArray.Length); //Если нужна копия для увеличения массива
+                Array.Resize<T>(ref sourceArray, length); //Если нужна копия для увеличения массива
                 Capacity = length;
-                sourceArray = new T[length];
             }
             else
-                System.Array.Copy(sourceArray, destinationArray, length); //Если нужен чистый массив значений
-            return destinationArray;
+                throw new Exception("Неудачное расширение листа");
         }
 
         private void InsertItem(T value)
@@ -96,6 +124,7 @@ namespace Listing
             Count++;
         }
 
+
         private int CheckIndex(int index) //рекурсия для получения индекса в закольцованном буфере
         {
             if (index > Count - 1)
@@ -103,7 +132,7 @@ namespace Listing
             return index;
         }
 
-        private int CheckCapacity(int length) //проверка на достаточную вместимость для вставки в лист
+        private int CheckCapacity(int length = 1) //проверка на достаточную вместимость для вставки в лист
         {
             if (Count + length > Capacity)
             {
@@ -112,12 +141,15 @@ namespace Listing
                 else
                     return Capacity + length * length;
             }
-            return length;
+            return Capacity;
         }
 
         public IEnumerator GetEnumerator()
         {
-            return new MyEnumerator<T>(MasCopy(ref myArray, Count));
+            //return new MyEnumerator<T>(MasCopy(ref myArray, Count));
+            T[] destinationArray = new T[Count];
+            Array.Copy(myArray, destinationArray, Count);
+            return new MyEnumerator<T>(destinationArray);
         }
 
     }
