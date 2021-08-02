@@ -2,8 +2,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Listing
 {
@@ -25,17 +23,10 @@ namespace Listing
             }
         }
 
-        public MyDoubleListG(int Capacity) //Конструктор, для ввода пользователем вместимости массива вручную
+        public MyDoubleListG(int Capacity = 1) //Конструктор, для ввода пользователем вместимости массива вручнуюмне сейчас
         {
             this.Capacity = Capacity;
             myArray = new T[Capacity];
-            Count = 0;
-        }
-
-        public MyDoubleListG() //Дефолтный конструктор
-        {
-            Capacity = 1;
-            myArray = new T[1];
             Count = 0;
         }
 
@@ -62,7 +53,7 @@ namespace Listing
                 {
                     myArray[i] = myArray[i + 1];
                 }
-                myArray[Count - 1] = default(T);
+                myArray[Count - 1] = default;
                 Count--;
             }
             else
@@ -81,7 +72,7 @@ namespace Listing
 
         private void CheckArray(int length)
         {
-                myArray = MasCopy(ref myArray, CheckCapacity(length));
+            myArray = MasCopy(ref myArray, CheckCapacity(length));
         }
 
         private T[] MasCopy(ref T[] sourceArray, int length) // Передается ссылка на массив myArray для его дальнейшего пересоздания и вставки в него значений из return

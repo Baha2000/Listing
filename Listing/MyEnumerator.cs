@@ -1,29 +1,38 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Listing
 {
-    class MyEnumerator<T> : IEnumerator
+    class MyEnumerator<T> : IEnumerator<T>
     {
         private int index;
-        T[] myArray;
+        private T[] myArray;
 
         public MyEnumerator(T[] myArray)
         {
             index = 0;
             this.myArray = myArray;
         }
-        public object Current
+
+        public void Dispose()
+        {
+        }
+
+        public T Current
+        {
+            get {
+                return myArray[index];
+            }
+        }
+
+        object IEnumerator.Current
         {
             get
             {
                 if (!CheckIndex(index))
                     throw new Exception("Недопустимый индекс");
-                return myArray[index];
+                return Current;
             }
         }
 
