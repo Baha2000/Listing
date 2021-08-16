@@ -152,5 +152,14 @@ namespace Listing
             return new MyEnumerator<T>(destinationArray);
         }
 
+        public IEnumerable<int> Range(int start, int count)
+        {
+            for (int i = start; i < count; i++)
+            {
+                yield return i;
+            }
+        }
+        
+        
     }
 }
