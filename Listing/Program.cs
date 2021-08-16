@@ -1,8 +1,18 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
+using System.Threading;
 using System.Threading.Channels;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
+using NLog;
+using NLog.Config;
+using NLog.Extensions.Logging;
+using NLog.Targets;
+using LogLevel = NLog.LogLevel;
 
 namespace Listing
 {
@@ -10,155 +20,145 @@ namespace Listing
     {
         static void Main(string[] args)
         {
-            //var myList = new MyDoubleList();
-            //var myList2 = new MyDoubleList(30);
-            //double[] array = new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15};
-            //double val, val2;
-            //
-            //myList.AddRange(array);      
-            //
-            //val = myList[11];
-            //
-            //myList.Remove(4);
-            //myList.Print();
-            //myList.Remove(8);
-            //
-            //foreach (var value in myList)
-            //{
-            //    Console.Write(value + " ");
-            //}
-            //Console.WriteLine();
-            //Console.WriteLine(val);
-            //Console.WriteLine();
-            //Console.WriteLine(myList.Count);
-            //Console.WriteLine(myList.Capacity);
-            //Console.WriteLine("***************************************");
-            //
-            //myList2.AddRange(array);
-            //
-            //val2 = myList2[14];
-            //
-            //myList2.Remove(5);
-            //myList2.Print();
-            //myList2.Remove(4);
-            //
-            //foreach (var value in myList2)
-            //{
-            //    Console.Write(value + " ");
-            //}
-            //Console.WriteLine();
-            //Console.WriteLine(val2);
-            //Console.WriteLine();
-            //Console.WriteLine(myList2.Count);
-            //Console.WriteLine(myList2.Capacity);
-            //
-            //myList2.AddRange(array);
-            //myList2.AddRange(array);
-            //myList2.AddRange(array);
-            //myList2.Remove(57);
-            //myList2.Print();
-//снизу норм
-            // var myList = new MyDoubleListG<string>();
-            // var myList2 = new MyDoubleListG<double>(30);
-            // string[] array = new string[] { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o"};
-            // double[] array2 = new double[] { 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15 };
-            // string val;
-            // double val2;
-            //
-            // myList.AddRange(array);
-            // myList[58] = "nice";
-            // val = myList[-58];
-            // Console.WriteLine(val);
-            // Console.ReadKey();
-            //
-            // myList.Remove(4);
-            // //myList.Print();
-            // myList.Remove(8);
-            //
-            // foreach (var value in myList)
-            // {
-            //     Console.Write(value + " ");
-            // }
-            // Console.WriteLine();
-            // Console.WriteLine(val);
-            // Console.WriteLine();
-            // Console.WriteLine(myList.Count);
-            // Console.WriteLine(myList.Capacity);
-            // Console.WriteLine("***************************************");
-            //
-            // myList2.AddRange(array2);
-            //
-            // val2 = myList2[14];
-            //
-            // myList2.Remove(5);
-            // myList2.Print();
-            // myList2.Remove(4);
-            //
-            // foreach (var value in myList2)
-            // {
-            //     Console.Write(value + " ");
-            // }
-            // Console.WriteLine();
-            // Console.WriteLine(val2);
-            // Console.WriteLine();
-            // Console.WriteLine(myList2.Count);
-            // Console.WriteLine(myList2.Capacity);
-            //
-            // myList2.AddRange(array2);
-            // myList2.AddRange(array2);
-            // myList2.AddRange(array2);
-            // myList2.Remove(57);
-            // myList2.Print();
-            //
-            // Console.ReadKey();
-            
-            //var myList2 = new MyDoubleListG<int>(30);
-            //foreach (var value in myList2.Range(1, 15))
-            //{
-            //    Console.WriteLine(value);
-            //}
-            //Console.WriteLine(myList2.Range(1, 10));
+
             //ЛИНК тест + экстеншен
             //инт лист -> стринг -> экран -> обратно в инт + рандом число -> только четные -> сортировка туда сюда и шафл
-            var myList = new List<int>();
-            var rand = new Random();
-
-            for (int i = 0; i < 10000; i++)
-            {
-                myList.Add(rand.Next(0, 1000));
-            }
-
-            var myList2 = from i1 in myList select i1.ToString();
-            
-
-             myList2.Select(i1 => i1).ToList().ForEach(Console.Write);
-            
-             myList = myList.Select(i1 => i1 + rand.Next(1, 101)).ToList();
-             Console.WriteLine("\n-------------------------------------------------------------------------------------");
-             myList.Where(i => i % 2 == 0).Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
-             Console.WriteLine("\n-------------------------------------------------------------------------------------");
-             myList.Where(i => i % 2 == 0).OrderBy(i => i).Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
-             Console.WriteLine("\n-------------------------------------------------------------------------------------");
-             myList.Where(i => i % 2 == 0).OrderByDescending(i => i).Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
-             Console.WriteLine("\n-------------------------------------------------------------------------------------");
-             Console.WriteLine(myList.Select(i => i).Count());
-             Console.WriteLine(myList.Select(i => i).Distinct().Count());
-             Console.WriteLine("\n-------------------------------------------------------------------------------------");
-             myList = myList.OrderBy(i => rand.Next()).ToList();
-             myList.Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
-             myList.Select(i => i).ForEach(i => Console.WriteLine($"{i} "));
-        }
-    }
-    
-    public static class EnumerableExtension
-    {
-        public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+        //     var myList = new List<int>();
+        //     var rand = new Random();
+        //
+        //     for (int i = 0; i < 10000; i++)
+        //     {
+        //         myList.Add(rand.Next(0, 1000));
+        //     }
+        //
+        //     var myList2 = from i1 in myList select i1.ToString();
+        //
+        //
+        //     myList2.Select(i1 => i1).ToList().ForEach(Console.Write);
+        //
+        //     myList = myList.Select(i1 => i1 + rand.Next(1, 101)).ToList();
+        //     Console.WriteLine(
+        //         "\n-------------------------------------------------------------------------------------");
+        //     myList.Where(i => i % 2 == 0).Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
+        //     Console.WriteLine(
+        //         "\n-------------------------------------------------------------------------------------");
+        //     myList.Where(i => i % 2 == 0).OrderBy(i => i).Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
+        //     Console.WriteLine(
+        //         "\n-------------------------------------------------------------------------------------");
+        //     myList.Where(i => i % 2 == 0).OrderByDescending(i => i).Select(i => i).ToList()
+        //         .ForEach(i => Console.Write($"{i} "));
+        //     Console.WriteLine(
+        //         "\n-------------------------------------------------------------------------------------");
+        //     Console.WriteLine(myList.Select(i => i).Count());
+        //     Console.WriteLine(myList.Select(i => i).Distinct().Count());
+        //     Console.WriteLine(
+        //         "\n-------------------------------------------------------------------------------------");
+        //     myList = myList.OrderBy(i => rand.Next()).ToList();
+        //     myList.Select(i => i).ToList().ForEach(i => Console.Write($"{i} "));
+        //     myList.Select(i => i).ForEach(i => Console.WriteLine($"{i} "));
+        var config = new LoggingConfiguration();
+        var logfile = new FileTarget("logFile")
         {
-            foreach (var value in enumerable)
+            FileName = "ProducerConsumerFile.txt",
+            Layout = @"${date:format=HH\:mm\:ss.fffff}|${level:uppercase=true}|${logger}|${message}",
+            DeleteOldFileOnStartup = true
+        };
+        var consoletarget = new ConsoleTarget("consoleLog")
+        {
+            Layout = @"${date:format=HH\:mm\:ss.fffff}|${level:uppercase=true}|${logger}|${message}"
+        };
+
+        config.AddRule(LogLevel.Debug, LogLevel.Fatal, logfile);
+        config.AddRule(LogLevel.Debug, LogLevel.Fatal, consoletarget);
+        LogManager.Configuration = config;
+        
+        
+        Producer producer = new Producer();
+        Consumer1 consumer1 = new Consumer1("Consumer1");
+        Consumer2 consumer2 = new Consumer2("Consumer2");
+        //producer.Notify += DisplayMessage;
+        Producer.ProducerHandler producerHandler1 = null;
+        Producer.ProducerHandler producerHandler2 = null;
+        producerHandler1 += consumer1.Subscribe;
+        producerHandler2 += consumer2.Subscribe;
+        producerHandler1?.Invoke($"{consumer1.numberConsumer} is triggering delegate");
+        producerHandler2?.Invoke($"{consumer2.numberConsumer} is triggering delegate");
+        producer.Notify += consumer1.Subscribe;
+        producer.Notify += consumer2.Subscribe;
+        producer.Trigger();
+
+        }
+    }
+
+    // public static class EnumerableExtension
+    // {
+    //     public static void ForEach<T>(this IEnumerable<T> enumerable, Action<T> action)
+    //     {
+    //         foreach (var value in enumerable)
+    //         {
+    //             action(value);
+    //         }
+    //     }
+    // }
+
+    public class Producer
+    {
+        public delegate void ProducerHandler(string message);
+        private readonly TimeSpan delay = TimeSpan.FromSeconds(10);
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+        public event ProducerHandler Notify;
+
+        public void Trigger()
+        {
+            ProducerHandler producerHandler = delegate(string message)
             {
-                action(value);
+                logger.Debug(message);
+            };
+            while (true)
+            {
+                Notify?.Invoke("is Triggering event");
+                Thread.Sleep(delay);
             }
         }
     }
+
+    public class Consumer1
+    {
+        public string numberConsumer;
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+        public Consumer1(string value)
+        {
+            numberConsumer = value;
+        }
+
+        public void Subscribe(string message)
+        {
+            logger.Debug($"{numberConsumer} {message}");
+            
+            //Console.WriteLine($"{numberConsumer} {message}");
+        }
+    }
+
+    public class Consumer2
+    {
+        public string numberConsumer;
+        private readonly Logger logger = LogManager.GetCurrentClassLogger();
+
+
+        public Consumer2(string value)
+        {
+            numberConsumer = value;
+        }
+        
+        public void Subscribe(string message)
+        {
+            
+            logger.Debug($"{numberConsumer} {message}");
+            //Console.WriteLine($"{numberConsumer} {message}");
+        }
+    }
+
 }
 //extention method посмотреть, делегаты, фанк, экшн, предикат
